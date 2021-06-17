@@ -1,4 +1,4 @@
-package dto;
+package com.bookdepository.dto;
 
 public class ExampleDto {
 

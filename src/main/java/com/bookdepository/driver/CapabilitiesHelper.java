@@ -1,4 +1,4 @@
-package driver;
+package com.bookdepository.driver;
 
 public class CapabilitiesHelper {
 

@@ -1,9 +1,16 @@
-package abstractclasses.page;
+package com.bookdepository.pages.abstractclasses.page;
+
+import org.openqa.selenium.WebDriver;
 
 public abstract class AbstractPage {
 
+    protected WebDriver driver;
     private String pageUrl;
     private String pageUrlPattern;
+
+    public AbstractPage(WebDriver driver) {
+        this.driver = driver;
+    }
 
     public void setPageUrl(String pageUrl) {
         this.pageUrl = pageUrl;
@@ -20,4 +27,14 @@ public abstract class AbstractPage {
     public String getPageUrlPattern() {
         return pageUrlPattern;
     }
+
+    public AbstractPage open(){
+        driver.get(getPageUrl() + getPageUrlPattern());
+        return this;
+    }
+
+    public boolean isOpened() {
+        return driver.getCurrentUrl().equals(pageUrl + pageUrlPattern);
+    }
+
 }
