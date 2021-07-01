@@ -12,27 +12,27 @@ public class LoginSteps {
 
     private AccountPage accountPage = new AccountPage(DriverManager.getChromedDriverInstance());
 
-    @Given("the user opens account page")
+    @Given("^(?:[Tt]he |)(?:[Cc]ustomer|[Uu]ser|[Gg]uest|) open(?:s)? account page$")
     public void userOpenAccountPage(){
         accountPage.open();
     }
 
-    @When("the user types {string} in userEmail input")
+    @When("^(?:[Tt]he |)(?:[Cc]ustomer|[Uu]ser|[Gg]uest|) (?:type|enter)(?:s)? (.+) in userEmail (?:input|field)$")
     public void userTypeUserEmail(String userEmail) {
         accountPage.typeUserEmail(userEmail);
     }
 
-    @And("the user types {string} in password input")
+    @And("^(?:[Tt]he |)(?:[Cc]ustomer|[Uu]ser|[Gg]uest|) (?:type|enter)(?:s)? (.+) in password (?:input|field)$")
     public void userTypePassword(String password) {
         accountPage.typePassword(password);
     }
 
-    @And("the user press Sign in button")
+    @And("^(?:[Tt]he |)(?:[Cc]ustomer|[Uu]ser|[Gg]uest|) (?:press|click) Sign in button$")
     public void userPressSignINButton(){
         accountPage.signIn();
     }
 
-    @Then("My Account button appears")
+    @Then("My Account button (?:is |)(?:appear(?:s)?|visible|clickable)$")
     public void myAccountButtonAppears() {
         Assertions.assertThat(accountPage.isMyAccountButtonPresent());
     }

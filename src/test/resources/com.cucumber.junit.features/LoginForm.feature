@@ -5,9 +5,9 @@ Feature: Login with valid userEmail/password
 
   @smoke
   Scenario Outline: Account page should contain login form and logins user in case right username/password
-    Given the user opens account page
-    When the user types "<userEmail>" in userEmail input
-    And the user types "<password>" in password input
+    Given The user opens account page
+    When the user types <userEmail> in userEmail input
+    And the user types <password> in password input
     And the user press Sign in button
     Then My Account button appears
       Examples:
