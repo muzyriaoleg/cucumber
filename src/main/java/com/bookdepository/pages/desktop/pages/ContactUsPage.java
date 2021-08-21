@@ -8,7 +8,6 @@ public class ContactUsPage extends AbstractPage {
 
     public ContactUsPage(WebDriver driver) {
         super(driver);
-        setPageUrl(Constants.URL);
         setPageUrlPattern(Constants.CONTACT_US_PAGE);
     }
 }

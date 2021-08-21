@@ -1,15 +1,19 @@
 package com.bookdepository.utils;
 
-import com.bookdepository.driver.DriverManager;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.bookdepository.driver.DriverManager;
+
 
 public class WebDriverWaiter {
 
-    public static WebElement find(By by) {
-        return new WebDriverWait(DriverManager.getChromedDriverInstance(), 10)
-                .until(ExpectedConditions.presenceOfElementLocated(by));
+    public static final int TIME_OUT = 10;
+    private static WebDriverWait driverWait;
+    public static WebDriverWait driverWait() {
+        if (driverWait == null) {
+            return new WebDriverWait(DriverManager.getChromedDriverInstance(), TIME_OUT);
+        }
+        return driverWait;
     }
+
 }
