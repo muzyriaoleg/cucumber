@@ -1,40 +1,55 @@
 package com.bookdepository.pages.abstractclasses.page;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 
-public abstract class AbstractPage {
+import com.bookdepository.constants.Constants;
+import com.bookdepository.utils.WebDriverWaiter;
 
-    protected WebDriver driver;
-    private String pageUrl;
-    private String pageUrlPattern;
 
-    public AbstractPage(WebDriver driver) {
-        this.driver = driver;
-    }
+public abstract class AbstractPage extends WebDriverWaiter {
 
-    public void setPageUrl(String pageUrl) {
-        this.pageUrl = pageUrl;
-    }
+	protected WebDriver driver;
+	private String pageUrl;
+	private String pageUrlPattern = Constants.EMPTY_STRING;
 
-    public String getPageUrl() {
-        return pageUrl;
-    }
+	protected AbstractPage(WebDriver driver) {
+		this.driver = driver;
+		setPageUrl(Constants.URL);
+		PageFactory.initElements(driver, this);
+	}
 
-    public String setPageUrlPattern(String pageUrlPattern) {
-        return this.pageUrlPattern = pageUrlPattern;
-    }
+	public void setPageUrl(String pageUrl) {
+		this.pageUrl = pageUrl;
+	}
 
-    public String getPageUrlPattern() {
-        return pageUrlPattern;
-    }
+	public String getPageUrl() {
+		return pageUrl;
+	}
 
-    public AbstractPage open(){
-        driver.get(getPageUrl() + getPageUrlPattern());
-        return this;
-    }
+	public void setPageUrlPattern(String pageUrlPattern) {
+		this.pageUrlPattern = pageUrlPattern;
+	}
 
-    public boolean isOpened() {
-        return driver.getCurrentUrl().equals(pageUrl + pageUrlPattern);
-    }
+	public String getPageUrlPattern() {
+		return pageUrlPattern;
+	}
 
+	public void open() {
+		driver.get(getPageUrl() + getPageUrlPattern());
+		driverWait().until(pageIsLoaded());
+	}
+
+	public boolean isOpened() {
+		JavascriptExecutor jsExecutor = (JavascriptExecutor)driver;
+		return jsExecutor.executeScript("return document.readyState").toString().equals("complete");
+	}
+
+	private ExpectedCondition<Boolean> pageIsLoaded() {
+		return webDriver -> ((JavascriptExecutor) webDriver)
+				.executeScript("return document.readyState")
+				.equals("complete");
+	}
 }

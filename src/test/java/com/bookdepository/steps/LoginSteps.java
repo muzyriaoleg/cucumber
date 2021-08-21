@@ -34,6 +34,6 @@ public class LoginSteps {
 
     @Then("My Account button (?:is |)(?:appear(?:s)?|visible|clickable)$")
     public void myAccountButtonAppears() {
-        Assertions.assertThat(accountPage.isMyAccountButtonPresent());
+        Assertions.assertThat(accountPage.isOpened()).withFailMessage("No button for you!").isTrue();
     }
 }

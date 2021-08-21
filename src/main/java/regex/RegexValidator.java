@@ -1,7 +1,5 @@
 package regex;
 
-import com.bookdepository.driver.DriverManager;
-import com.epam.pages.ContactPage;
 
 public class RegexValidator {
 
@@ -49,20 +47,20 @@ public class RegexValidator {
                 + isRegexMatchString("^(\\d{4}(\\s)?){3}\\d{4}$", "1211 1111 11s1 1111"));
         System.out.println();
 
-        //4. 4.	Get Epam address elements as text (https://www.epam.com/about/who-we-are/contact) using regex
-        DriverManager.setupDriver();
-        ContactPage contactPage = new ContactPage(DriverManager.getChromedDriverInstance());
-        String address = contactPage.open().getAddress();
-        DriverManager.quitDriver();
-        String [] addressGroups = address.split("•");
-        String [] apartmentsTownStateIndex = addressGroups[1].split(",");
-        System.out.println("Street: " +  getValueByRegex(addressGroups[0], "(\\d+\\s)(.*)", 2));
-        System.out.println("House: " +  getValueByRegex(addressGroups[0], "(\\d+\\s)(.*)", 1));
-        System.out.println("Apartments: " +  getValueByRegex(apartmentsTownStateIndex[0], "(\\w+\\s)(\\d+)", 2));
-        System.out.println("Town: " + getValueByRegex(apartmentsTownStateIndex[1], "(\\w)", 1));
-        System.out.println("State: " + getValueByRegex(apartmentsTownStateIndex[2], "([A-Z]*\\s)(\\d{5})", 1));
-        System.out.println("Index: " + getValueByRegex(apartmentsTownStateIndex[2], "([A-Z]*\\s)(\\d{5})", 2));
-        System.out.println("Country: " + getValueByRegex(addressGroups[2], "(\\w+)", 1));
+//        //4. 4.	Get Epam address elements as text (https://www.epam.com/about/who-we-are/contact) using regex
+//        DriverManager.setupDriver();
+//        ContactPage contactPage = new ContactPage(DriverManager.getChromedDriverInstance());
+//        String address = contactPage.open().getAddress();
+//        DriverManager.quitDriver();
+//        String [] addressGroups = address.split("•");
+//        String [] apartmentsTownStateIndex = addressGroups[1].split(",");
+//        System.out.println("Street: " +  getValueByRegex(addressGroups[0], "(\\d+\\s)(.*)", 2));
+//        System.out.println("House: " +  getValueByRegex(addressGroups[0], "(\\d+\\s)(.*)", 1));
+//        System.out.println("Apartments: " +  getValueByRegex(apartmentsTownStateIndex[0], "(\\w+\\s)(\\d+)", 2));
+//        System.out.println("Town: " + getValueByRegex(apartmentsTownStateIndex[1], "(\\w)", 1));
+//        System.out.println("State: " + getValueByRegex(apartmentsTownStateIndex[2], "([A-Z]*\\s)(\\d{5})", 1));
+//        System.out.println("Index: " + getValueByRegex(apartmentsTownStateIndex[2], "([A-Z]*\\s)(\\d{5})", 2));
+//        System.out.println("Country: " + getValueByRegex(addressGroups[2], "(\\w+)", 1));
 
     }
 }
