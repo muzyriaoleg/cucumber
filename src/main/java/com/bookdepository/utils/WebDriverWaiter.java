@@ -11,9 +11,9 @@ public class WebDriverWaiter {
     private static WebDriverWait driverWait;
     public static WebDriverWait driverWait() {
         if (driverWait == null) {
-            return new WebDriverWait(DriverManager.getChromedDriverInstance(), TIME_OUT);
+            driverWait = new WebDriverWait(DriverManager.getChromedDriverInstance(), TIME_OUT);
+            return driverWait;
         }
         return driverWait;
     }
-
 }

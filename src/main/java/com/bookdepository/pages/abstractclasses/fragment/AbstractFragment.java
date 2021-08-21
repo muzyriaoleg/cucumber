@@ -5,7 +5,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 
 import com.bookdepository.utils.WebDriverWaiter;
-import com.bookdepository.utils.WebElementUtils;
 
 
 public abstract class AbstractFragment extends WebDriverWaiter {
@@ -43,6 +42,6 @@ public abstract class AbstractFragment extends WebDriverWaiter {
 
 	public void actionSendKey(WebElement element, Keys key) {
 		Actions actions = new Actions(driver);
-		actions.sendKeys(key).build().perform();
+		actions.moveToElement(element).sendKeys(key).build().perform();
 	}
 }

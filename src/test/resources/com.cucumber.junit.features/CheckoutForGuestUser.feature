@@ -28,7 +28,7 @@ Feature: Desktop Checkout for Guest User
     Then I am redirected to the "Basket page"
     And Basket order summary is as following:
       | Delivery cost | Total   |
-      | FREE          | 89,71 € |
+      | FREE          | 88,65 € |
     When I click 'Checkout' button on 'Basket' page
     Then I am redirected to the "Checkout" page
     When I click 'Buy now' button
@@ -41,7 +41,7 @@ Feature: Desktop Checkout for Guest User
       | Postcode/ZIP    | Please enter your postcode/ZIP or write 'No Postcode' |
     And Checkout order summary is as following:
       | Sub-total | Delivery | VAT    | Total   |
-      | 89,71 €   | FREE     | 0,00 € | 89,71 € |
+      | 88,65 €   | FREE     | 0,00 € | 88,65 € |
     And I checkout as a new customer with email test@user.com
     When I fill delivery address information manually:
       | fullName | deliveryCounty | addressLine1     | addressLine2     | townCity | countyState  | postCode |

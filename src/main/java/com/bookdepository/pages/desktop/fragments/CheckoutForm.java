@@ -1,7 +1,5 @@
 package com.bookdepository.pages.desktop.fragments;
 
-import java.sql.Driver;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -34,7 +32,7 @@ public class CheckoutForm extends AbstractFragment {
 		return WebElementUtils.getTextContentFromElement(DriverManager.getChromedDriverInstance(), totalCost);
 	}
 
-	public void pressCheckoutButton(){
+	public void pressCheckoutButton() {
 		jsClick(checkoutButtonElement);
 	}
 
