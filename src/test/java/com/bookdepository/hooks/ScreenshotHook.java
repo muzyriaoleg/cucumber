@@ -12,7 +12,7 @@ public class ScreenshotHook {
 
     @After
     public void takeScreenshot(Scenario scenario) {
-        byte[] screenshot = ((TakesScreenshot) DriverManager.getChromedDriverInstance()).getScreenshotAs(OutputType.BYTES);
+        byte[] screenshot = ((TakesScreenshot) DriverManager.getDriverInstance()).getScreenshotAs(OutputType.BYTES);
         scenario.attach(screenshot, PNG_FILE_EXTENSION, scenario.getName());
     }
 }

@@ -1,12 +1,10 @@
 package com.bookdepository.pages.desktop.pages;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.bookdepository.constants.Constants;
 import com.bookdepository.pages.abstractclasses.page.AbstractPage;
-import com.bookdepository.pages.desktop.fragments.NavigationBar;
 
 
 public class AccountPage extends AbstractPage {
@@ -20,17 +18,12 @@ public class AccountPage extends AbstractPage {
 	@FindBy(css = "#signInSubmit")
 	WebElement signInButton;
 
-	private NavigationBar navigationBar;
+	@FindBy(css = "a[href=\"/account\"]")
+	WebElement myAccountButton;
 
-	public AccountPage(WebDriver driver) {
-		super(driver);
-		setPageUrlPattern(Constants.ACCOUNT_PAGE);
-	}
-
-	@Override
-	public void open() {
-		super.open();
-		navigationBar = new NavigationBar(driver);
+	public AccountPage() {
+		super();
+		setPageUrlPattern(Constants.ACCOUNT_PAGE_URL_PATTERN);
 	}
 
 	public void typeUserEmail(String userEmail) {
@@ -44,6 +37,10 @@ public class AccountPage extends AbstractPage {
 
 	public void signIn() {
 		signInButton.click();
+	}
+
+	public boolean isMyAccountButtonPresent() {
+		return myAccountButton.isDisplayed();
 	}
 
 }

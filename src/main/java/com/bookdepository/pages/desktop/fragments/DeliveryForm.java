@@ -3,7 +3,6 @@ package com.bookdepository.pages.desktop.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
@@ -56,17 +55,13 @@ public class DeliveryForm extends AbstractFragment {
 	@FindBy(css = "input[name='delivery-postCode']")
 	WebElement postCodeInput;
 
-	public DeliveryForm(WebDriver driver) {
-		super(driver);
-	}
-
 	public List<String> getValidationErrorList() {
 		List<String> errorList = new ArrayList<>();
-		errorList.add(WebElementUtils.getTextContentFromElement(driver, emailInputValidationError));
-		errorList.add(WebElementUtils.getTextContentFromElement(driver, deliveryFullNameValidationError));
-		errorList.add(WebElementUtils.getTextContentFromElement(driver, addressLine1ValidationError));
-		errorList.add(WebElementUtils.getTextContentFromElement(driver, deliveryCityValidationError));
-		errorList.add(WebElementUtils.getTextContentFromElement(driver, deliveryPostCodeValidationError));
+		errorList.add(emailInputValidationError.getText());
+		errorList.add(deliveryFullNameValidationError.getText());
+		errorList.add(addressLine1ValidationError.getText());
+		errorList.add(deliveryCityValidationError.getText());
+		errorList.add(deliveryPostCodeValidationError.getText());
 		return errorList;
 	}
 
@@ -110,6 +105,7 @@ public class DeliveryForm extends AbstractFragment {
 	}
 
 	public void submitDeliveryForm() {
+		jsScrollIntoView(buyNowButton);
 		actionClick(buyNowButton);
 	}
 

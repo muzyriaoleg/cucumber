@@ -3,12 +3,12 @@ package com.bookdepository.pages.desktop.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 
 import com.bookdepository.pages.abstractclasses.fragment.AbstractFragment;
-import com.bookdepository.utils.WebElementUtils;
 
 
 public class PaymentForm extends AbstractFragment {
@@ -22,7 +22,7 @@ public class PaymentForm extends AbstractFragment {
 	@FindBy(xpath = "//label[@for='visacardCvv']/../..//span[@class='grid_12 notification custom_notification hide']")
 	WebElement creditCardCVVValidationError;
 
-	@FindBy(xpath = "//*[@id='paymentButtons']")
+	@FindBy(css = "#submitButton")
 	WebElement buyNowButton;
 
 	@FindBy(css = "#brandSelected")
@@ -43,21 +43,17 @@ public class PaymentForm extends AbstractFragment {
 	@FindBy(css = "#visacardCvv")
 	WebElement cardCVVInput;
 
-	public PaymentForm(WebDriver driver) {
-		super(driver);
-	}
-
 	public List<String> getValidationErrorList() {
 		List<String> errorList = new ArrayList<>();
-		errorList.add(WebElementUtils.getTextContentFromElement(driver, creditCardNumberValidationError));
-		errorList.add(WebElementUtils.getTextContentFromElement(driver, creditCardNameValidationError));
-		errorList.add(WebElementUtils.getTextContentFromElement(driver, creditCardCVVValidationError));
+		errorList.add(creditCardNumberValidationError.getText());
+		errorList.add(creditCardNameValidationError.getText());
+		errorList.add(creditCardCVVValidationError.getText());
 		return errorList;
 	}
 
 	public void pressBuyNowButton() {
 		driver.switchTo().frame(driver.findElement(By.xpath("//iframe[@id='chase']")));
-		buyNowButton.click();
+		jsClick(buyNowButton);
 	}
 
 	public void chooseCardType(String cardType) {
@@ -86,11 +82,5 @@ public class PaymentForm extends AbstractFragment {
 	public void typeCardCVV(String cvv) {
 		cardCVVInput.sendKeys(cvv);
 	}
-
-
-
-
-
-
 
 }

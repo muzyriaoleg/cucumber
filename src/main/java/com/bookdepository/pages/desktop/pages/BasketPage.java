@@ -1,29 +1,17 @@
 package com.bookdepository.pages.desktop.pages;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-
+import com.bookdepository.constants.Constants;
 import com.bookdepository.pages.abstractclasses.page.AbstractPage;
 import com.bookdepository.pages.desktop.fragments.CheckoutForm;
-import com.bookdepository.utils.WebDriverWaiter;
 
 
 public class BasketPage extends AbstractPage {
 
-	@FindBy(css = ".basket-page")
-	WebElement basketPageBaseElement;
+	CheckoutForm checkoutForm = new CheckoutForm();
 
-	CheckoutForm checkoutForm = new CheckoutForm(driver);
-
-	public BasketPage(WebDriver driver) {
-		super(driver);
-	}
-
-	@Override
-	public boolean isOpened() {
-		return WebDriverWaiter.driverWait().until(ExpectedConditions.visibilityOf(basketPageBaseElement)).isDisplayed();
+	public BasketPage() {
+		super();
+		setPageUrlPattern(Constants.BASKET_PAGE_URL_PATTERN);
 	}
 
 	public String getDeliveryCost() {

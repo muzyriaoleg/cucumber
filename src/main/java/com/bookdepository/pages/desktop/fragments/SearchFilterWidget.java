@@ -1,6 +1,5 @@
 package com.bookdepository.pages.desktop.fragments;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
@@ -24,10 +23,6 @@ public class SearchFilterWidget extends AbstractFragment {
 
 	@FindBy(css = ".padded-btn-wrap button[type='submit']")
 	WebElement submitFiltersButtonElem;
-
-	public SearchFilterWidget(WebDriver driver) {
-		super(driver);
-	}
 
 	public void choosePriceRange(String priceValue) {
 		Select priceRangeSelect = new Select(priceRangeSelectElem);

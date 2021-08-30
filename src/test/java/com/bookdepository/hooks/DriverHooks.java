@@ -9,7 +9,7 @@ public class DriverHooks {
 
     @Before
     public void setupDriver() {
-        DriverManager.setupDriver();
+        DriverManager.getDriverInstance();
     }
 
     @After

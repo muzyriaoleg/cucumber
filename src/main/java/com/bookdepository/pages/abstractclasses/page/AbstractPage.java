@@ -6,17 +6,17 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
 import com.bookdepository.constants.Constants;
+import com.bookdepository.driver.DriverManager;
 import com.bookdepository.utils.WebDriverWaiter;
 
 
 public abstract class AbstractPage extends WebDriverWaiter {
 
-	protected WebDriver driver;
+	protected WebDriver driver = DriverManager.getDriverInstance();
 	private String pageUrl;
 	private String pageUrlPattern = Constants.EMPTY_STRING;
 
-	protected AbstractPage(WebDriver driver) {
-		this.driver = driver;
+	protected AbstractPage() {
 		setPageUrl(Constants.URL);
 		PageFactory.initElements(driver, this);
 	}
@@ -37,19 +37,39 @@ public abstract class AbstractPage extends WebDriverWaiter {
 		return pageUrlPattern;
 	}
 
-	public void open() {
+	public AbstractPage open() {
 		driver.get(getPageUrl() + getPageUrlPattern());
-		driverWait().until(pageIsLoaded());
+		isPageLoaded();
+		return this;
 	}
 
 	public boolean isOpened() {
-		JavascriptExecutor jsExecutor = (JavascriptExecutor)driver;
-		return jsExecutor.executeScript("return document.readyState").toString().equals("complete");
+		return isPageUrlMatchUrlPattern() && isPageLoaded();
 	}
 
-	private ExpectedCondition<Boolean> pageIsLoaded() {
+	private ExpectedCondition<Boolean> jsIsLoaded() {
 		return webDriver -> ((JavascriptExecutor) webDriver)
 				.executeScript("return document.readyState")
 				.equals("complete");
+	}
+
+	private ExpectedCondition<Boolean> jQueryIsLoaded() {
+		return webDriver -> ((JavascriptExecutor) webDriver)
+				.executeScript("return jQuery.active").toString()
+				.equals("0");
+	}
+
+	private boolean isPageLoaded() {
+		driverWait().until(jsIsLoaded());
+		return true;
+	}
+
+	private boolean isPageUrlMatchUrlPattern() {
+		driverWait().until(pageUrlIsUpdated());
+		return true;
+	}
+
+	private ExpectedCondition<Boolean> pageUrlIsUpdated() {
+		return webDriver -> webDriver.getCurrentUrl().contains(pageUrlPattern);
 	}
 }

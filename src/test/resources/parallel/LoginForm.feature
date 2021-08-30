@@ -5,7 +5,7 @@ Feature: Login with valid userEmail/password
 
   @smoke
   Scenario Outline: Account page should contain login form and logins user in case right username/password
-    Given The user opens account page
+    Given The user opens Account page
     When the user types <userEmail> in userEmail input
     And the user types <password> in password input
     And the user press Sign in button
@@ -13,4 +13,3 @@ Feature: Login with valid userEmail/password
       Examples:
       |userEmail|password|
       |olegmuzyria89@gmail.com|GlacialCascad31!|
-      |test1@gmail.com|pass2|

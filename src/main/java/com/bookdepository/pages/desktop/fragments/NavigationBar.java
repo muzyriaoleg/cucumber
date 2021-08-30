@@ -23,20 +23,19 @@ public class NavigationBar extends AbstractFragment {
 	WebElement homeButtonElement;
 
 
-	public NavigationBar(WebDriver driver) {
-		super(driver);
-		PageFactory.initElements(DriverManager.getChromedDriverInstance(), this);
+	public NavigationBar() {
+		PageFactory.initElements(DriverManager.getDriverInstance(), this);
 		setRootElement(navigationBarCoreElement);
 	}
 
 	public ContactUsPage pressContactUsButton(WebDriver driver){
 		contactUsButtonElement.click();
-		return new ContactUsPage(driver);
+		return new ContactUsPage();
 	}
 
 	public HomePage pressHomeButton(WebDriver driver){
 		homeButtonElement.click();
-		return new HomePage(driver);
+		return new HomePage();
 	}
 
 
