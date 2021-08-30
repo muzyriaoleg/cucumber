@@ -2,6 +2,7 @@ package parallel;
 
 import org.assertj.core.api.Assertions;
 
+import com.bookdepository.constants.Constants;
 import com.bookdepository.pages.desktop.PageFactory;
 
 import io.cucumber.java.en.*;
@@ -30,8 +31,8 @@ public class LoginStepsParallel extends PageFactory {
 		getAccountPage().signIn();
 	}
 
-	@Then("My Account button (?:is |)(?:appear(?:s)?|visible|clickable)$")
-	public void myAccountButtonAppears() {
-		Assertions.assertThat(getAccountPage().isMyAccountButtonPresent()).as("Account button is not present").isTrue();
+	@Then("^(?:[Tt]he |)(?:[Cc]ustomer|[Uu]ser|[Gg]uest|) is redirected to \"(.+)\"$")
+	public void userIsRedirectedToWelcomePage(String pageName) {
+		Assertions.assertThat(createPage(pageName).isOpened()).as("Account button is not present").isTrue();
 	}
 }

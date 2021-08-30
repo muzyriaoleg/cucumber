@@ -7,7 +7,5 @@ import io.cucumber.junit.CucumberOptions;
 
 
 @RunWith(Cucumber.class)
-@CucumberOptions(
-)
 public class RunCucumberTest {
 }

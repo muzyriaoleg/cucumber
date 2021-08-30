@@ -12,6 +12,7 @@ public class PageFactory {
 	private BasketPage basketPage;
 	private CheckoutPage checkoutPage;
 	private AccountPage accountPage;
+	private WelcomePage welcomePage;
 
 	public AbstractPage createPage(String pageName) {
 		if (pageName.equalsIgnoreCase(Constants.HOME_PAGE_NAME)) {
@@ -38,12 +39,19 @@ public class PageFactory {
 			}
 			return searchResultPage;
 		}
+		if (pageName.equalsIgnoreCase(Constants.WELCOME_PAGE_NAME)) {
+			if (welcomePage == null) {
+				welcomePage = new WelcomePage();
+			}
+			return welcomePage;
+		}
 		if (pageName.equalsIgnoreCase(Constants.ACCOUNT_PAGE_NAME)) {
 			if (accountPage == null) {
 				accountPage = new AccountPage();
 			}
 			return accountPage;
 		}
+
 		else {
 			throw new IllegalStateException("Cannot create specified page");
 		}

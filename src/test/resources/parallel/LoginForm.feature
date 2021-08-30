@@ -9,7 +9,7 @@ Feature: Login with valid userEmail/password
     When the user types <userEmail> in userEmail input
     And the user types <password> in password input
     And the user press Sign in button
-    Then My Account button appears
+    Then the user is redirected to "Welcome page"
       Examples:
       |userEmail|password|
       |olegmuzyria89@gmail.com|GlacialCascad31!|

@@ -114,10 +114,9 @@
                         </configurationParameters>
                     </properties>
                     <parallel>classesAndMethods</parallel>
-                    <useUnlimitedThreads>true</useUnlimitedThreads>
+                    <threadCount>4</threadCount>
                     <systemPropertyVariables>
                         <browser>firefox</browser>
-                        <scope>test</scope>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>

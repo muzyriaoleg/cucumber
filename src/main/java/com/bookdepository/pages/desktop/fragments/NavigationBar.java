@@ -22,6 +22,9 @@ public class NavigationBar extends AbstractFragment {
 	@FindBy(css = ".user-nav-wrap  .home-icon-link")
 	WebElement homeButtonElement;
 
+	@FindBy(css = "a[href=\"/account\"]")
+	WebElement myAccountButton;
+
 
 	public NavigationBar() {
 		PageFactory.initElements(DriverManager.getDriverInstance(), this);
@@ -36,6 +39,11 @@ public class NavigationBar extends AbstractFragment {
 	public HomePage pressHomeButton(WebDriver driver){
 		homeButtonElement.click();
 		return new HomePage();
+	}
+
+	public boolean isAccountButtonPresent() {
+		find(myAccountButton);
+		return true;
 	}
 
 
