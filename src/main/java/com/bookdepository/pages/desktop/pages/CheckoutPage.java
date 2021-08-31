@@ -1,6 +1,8 @@
 package com.bookdepository.pages.desktop.pages;
 import java.util.List;
 
+import org.openqa.selenium.WebDriver;
+
 import com.bookdepository.constants.Constants;
 import com.bookdepository.pages.abstractclasses.page.AbstractPage;
 import com.bookdepository.pages.desktop.fragments.*;
@@ -8,14 +10,14 @@ import com.bookdepository.pages.desktop.fragments.*;
 
 public class CheckoutPage extends AbstractPage {
 
-	public CheckoutPage() {
-		super();
+	public CheckoutPage(WebDriver driver) {
+		super(driver);
 		setPageUrlPattern(Constants.CHECKOUT_PAGE_GUEST_URL_PATTERN);
 	}
 
-	DeliveryForm deliveryForm = new DeliveryForm();
-	OrderSummaryWidget orderSummaryWidget = new OrderSummaryWidget();
-	PaymentForm paymentForm = new PaymentForm();
+	DeliveryForm deliveryForm = new DeliveryForm(driver);
+	OrderSummaryWidget orderSummaryWidget = new OrderSummaryWidget(driver);
+	PaymentForm paymentForm = new PaymentForm(driver);
 
 	public List<String> getErrorMessagesFromDeliveryAddressForm() {
 		return deliveryForm.getValidationErrorList();

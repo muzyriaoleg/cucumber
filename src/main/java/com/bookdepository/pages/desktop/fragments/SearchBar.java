@@ -1,5 +1,6 @@
 package com.bookdepository.pages.desktop.fragments;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -10,6 +11,10 @@ public class SearchBar extends AbstractFragment {
 
 	@FindBy(css = "input[name='searchTerm']")
 	WebElement searchInputElement;
+
+	public SearchBar(WebDriver driver) {
+		super(driver);
+	}
 
 	public void search(String text) {
 		typeText(searchInputElement, text);

@@ -1,15 +1,14 @@
 package com.bookdepository.pages.desktop.fragments;
 
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 
 import com.bookdepository.pages.abstractclasses.fragment.AbstractFragment;
 
 
 public class Input extends AbstractFragment {
 
-	public Input(WebElement element) {
-		super(element);
+	public Input(WebDriver driver, WebElement element) {
+		super(driver, element);
 	}
 
 	public void type(String text) {

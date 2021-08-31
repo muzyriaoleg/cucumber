@@ -3,17 +3,15 @@ package com.bookdepository.pages.abstractclasses.fragment;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import com.bookdepository.driver.DriverManager;
 import com.bookdepository.utils.WebDriverWaiter;
 
 
 public abstract class AbstractFragment extends WebDriverWaiter {
 
 	private WebElement rootElement;
-	protected WebDriver driver = DriverManager.getDriverInstance();
+	protected WebDriver driver;
 
 	public void setRootElement(WebElement element) {
 		this.rootElement = element;
@@ -23,11 +21,13 @@ public abstract class AbstractFragment extends WebDriverWaiter {
 		return rootElement;
 	}
 
-	protected AbstractFragment() {
+	protected AbstractFragment(WebDriver driver) {
+		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
 
-	protected AbstractFragment(WebElement element) {
+	protected AbstractFragment(WebDriver driver, WebElement element) {
+		this.driver = driver;
 		this.rootElement = element;
 		PageFactory.initElements(driver, this);
 	}
@@ -53,7 +53,7 @@ public abstract class AbstractFragment extends WebDriverWaiter {
 	}
 
 	public WebElement find(WebElement element) {
-		driverWait().until(ExpectedConditions.visibilityOf(element));
+		driverWait(driver).until(ExpectedConditions.visibilityOf(element));
 		return element;
 	}
 

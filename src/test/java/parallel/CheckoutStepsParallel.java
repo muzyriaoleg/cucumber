@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
+import org.openqa.selenium.WebDriver;
 
 import com.bookdepository.driver.DriverManager;
 import com.bookdepository.dto.Card;
@@ -18,20 +19,21 @@ import io.cucumber.java.en.*;
 
 public class CheckoutStepsParallel extends PageFactory {
 
+	WebDriver driver = new DriverManager().createDriver();
 
 	@Given("^(?:I|[Uu]ser|[Cc]ustomer) (?:am|is|are|) an anonymous customer with clear cookies")
 	public void clearCookies() {
-		DriverManager.clearCookies();
+		driver.manage().deleteAllCookies();
 	}
 
 	@And("^(?:I|[Uu]ser|[Cc]ustomer) (?:open|go)(?:s|) (?:the|to) \"(.+)\"$")
 	public void userOpenPage(String pageName) {
-		Assertions.assertThat(createPage(pageName).open().isOpened()).as(pageName + " is not opened").isTrue();
+		Assertions.assertThat(createPage(pageName, driver).open().isOpened()).as(pageName + " is not opened").isTrue();
 	}
 
 	@And("^(?:I|[Uu]ser|[Cc]ustomer) (?:am|is|are|) redirected to (?:a|the|) \"(.+)\"$")
 	public void userIsRedirectedToPage(String pageName) {
-		Assertions.assertThat(createPage(pageName).isOpened())
+		Assertions.assertThat(createPage(pageName, driver).isOpened())
 				.as(pageName + " is not opened").isTrue();
 	}
 
@@ -64,6 +66,7 @@ public class CheckoutStepsParallel extends PageFactory {
 	@When("^(?:I|[Uu]ser|[Cc]ustomer) (?:click|press) 'Add to basket' button for (?:product|book|)(?:s|es|) with name (.+)$")
 	public void userAddProductToBasket(String bookTitle) {
 		getSearchResultPage().addBookToBasket(bookTitle);
+		driver.quit();
 	}
 
 	@And("^(?:I|[Uu]ser|[Cc]ustomer) (?:select|choose) 'Basket/Checkout' in basket pop-up$")
