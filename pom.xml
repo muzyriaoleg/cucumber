@@ -116,7 +116,7 @@
                     <parallel>classesAndMethods</parallel>
                     <useUnlimitedThreads>true</useUnlimitedThreads>
                     <systemPropertyVariables>
-                        <browser>firefox</browser>
+                        <browser>chrome</browser>
                         <scope>test</scope>
                     </systemPropertyVariables>
                 </configuration>
