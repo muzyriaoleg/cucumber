@@ -116,8 +116,11 @@
                     <parallel>classesAndMethods</parallel>
                     <threadCount>4</threadCount>
                     <systemPropertyVariables>
-                        <browser>firefox</browser>
+                        <browser>chrome</browser>
                     </systemPropertyVariables>
+                    <includes>
+                        <include>RunCucumberTest.class</include>
+                    </includes>
                 </configuration>
             </plugin>
         </plugins>

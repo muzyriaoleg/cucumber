@@ -3,12 +3,12 @@ package com.bookdepository.pages.desktop.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 
 import com.bookdepository.pages.abstractclasses.fragment.AbstractFragment;
-import com.bookdepository.utils.WebElementUtils;
 
 
 public class DeliveryForm extends AbstractFragment {
@@ -54,6 +54,10 @@ public class DeliveryForm extends AbstractFragment {
 
 	@FindBy(css = "input[name='delivery-postCode']")
 	WebElement postCodeInput;
+
+	public DeliveryForm(WebDriver driver) {
+		super(driver);
+	}
 
 	public List<String> getValidationErrorList() {
 		List<String> errorList = new ArrayList<>();

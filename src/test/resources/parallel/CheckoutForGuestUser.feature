@@ -1,3 +1,4 @@
+@Parallel
 @Regression
 Feature: Desktop Checkout for Guest User
   As a customer

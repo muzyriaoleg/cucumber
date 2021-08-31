@@ -1,5 +1,7 @@
 package com.bookdepository.pages.desktop;
 
+import org.openqa.selenium.WebDriver;
+
 import com.bookdepository.constants.Constants;
 import com.bookdepository.pages.abstractclasses.page.AbstractPage;
 import com.bookdepository.pages.desktop.pages.*;
@@ -14,40 +16,40 @@ public class PageFactory {
 	private AccountPage accountPage;
 	private WelcomePage welcomePage;
 
-	public AbstractPage createPage(String pageName) {
+	public AbstractPage createPage(String pageName, WebDriver driver) {
 		if (pageName.equalsIgnoreCase(Constants.HOME_PAGE_NAME)) {
 			if (homePage == null) {
-				homePage = new HomePage();
+				homePage = new HomePage(driver);
 			}
 			return homePage;
 		}
 		if (pageName.equalsIgnoreCase(Constants.CHECKOUT_PAGE_NAME)) {
 			if (checkoutPage == null) {
-				checkoutPage = new CheckoutPage();
+				checkoutPage = new CheckoutPage(driver);
 			}
 			return checkoutPage;
 		}
 		if (pageName.equalsIgnoreCase(Constants.BASKET_PAGE_NAME)) {
 			if (basketPage == null) {
-				basketPage = new BasketPage();
+				basketPage = new BasketPage(driver);
 			}
 			return basketPage;
 		}
 		if (pageName.equalsIgnoreCase(Constants.SEARCH_RESULT_PAGE_NAME)) {
 			if (searchResultPage == null) {
-				searchResultPage = new SearchResultPage();
+				searchResultPage = new SearchResultPage(driver);
 			}
 			return searchResultPage;
 		}
 		if (pageName.equalsIgnoreCase(Constants.WELCOME_PAGE_NAME)) {
 			if (welcomePage == null) {
-				welcomePage = new WelcomePage();
+				welcomePage = new WelcomePage(driver);
 			}
 			return welcomePage;
 		}
 		if (pageName.equalsIgnoreCase(Constants.ACCOUNT_PAGE_NAME)) {
 			if (accountPage == null) {
-				accountPage = new AccountPage();
+				accountPage = new AccountPage(driver);
 			}
 			return accountPage;
 		}

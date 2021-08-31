@@ -1,8 +1,9 @@
 package parallel;
 
 import org.assertj.core.api.Assertions;
+import org.openqa.selenium.WebDriver;
 
-import com.bookdepository.constants.Constants;
+import com.bookdepository.driver.DriverManager;
 import com.bookdepository.pages.desktop.PageFactory;
 
 import io.cucumber.java.en.*;
@@ -10,10 +11,11 @@ import io.cucumber.java.en.*;
 
 public class LoginStepsParallel extends PageFactory {
 
+	WebDriver driver = new DriverManager().createDriver();
 
 	@Given("^(?:[Tt]he |)(?:[Cc]ustomer|[Uu]ser|[Gg]uest|) open(?:s)? (.+)$")
 	public void userOpenPage(String pageName) {
-		createPage(pageName).open();
+		createPage(pageName, driver).open();
 	}
 
 	@When("^(?:[Tt]he |)(?:[Cc]ustomer|[Uu]ser|[Gg]uest|) (?:type|enter)(?:s)? (.+) in userEmail (?:input|field)$")
@@ -33,6 +35,7 @@ public class LoginStepsParallel extends PageFactory {
 
 	@Then("^(?:[Tt]he |)(?:[Cc]ustomer|[Uu]ser|[Gg]uest|) is redirected to \"(.+)\"$")
 	public void userIsRedirectedToWelcomePage(String pageName) {
-		Assertions.assertThat(createPage(pageName).isOpened()).as("Account button is not present").isTrue();
+		Assertions.assertThat(driver.getCurrentUrl()).as("Welcome page is not opened").isEqualTo("https://www.bookdepository.com/?status=welcome&");
+		driver.quit();
 	}
 }

@@ -2,13 +2,12 @@ package com.bookdepository.pages.desktop.pages;
 
 import java.util.List;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 
 import com.bookdepository.constants.Constants;
-import com.bookdepository.pages.abstractclasses.fragment.AbstractFragment;
 import com.bookdepository.pages.abstractclasses.page.AbstractPage;
-import com.bookdepository.pages.desktop.fragments.*;
+import com.bookdepository.pages.desktop.fragments.BasketModalWindow;
+import com.bookdepository.pages.desktop.fragments.SearchFilterWidget;
 import com.bookdepository.utils.WebElementUtils;
 
 
@@ -16,11 +15,11 @@ public class SearchResultPage extends AbstractPage {
 
 	private String bookTitleXpathTemplate = "//a[contains(text(), '%s')]/../../..//div[@class='btn-wrap']";
 
-	BasketModalWindow basketModalWindow = new BasketModalWindow();
-	SearchFilterWidget searchWidget = new SearchFilterWidget();
+	BasketModalWindow basketModalWindow = new BasketModalWindow(driver);
+	SearchFilterWidget searchWidget = new SearchFilterWidget(driver);
 
-	public SearchResultPage() {
-		super();
+	public SearchResultPage(WebDriver driver) {
+		super(driver);
 		setPageUrlPattern(Constants.SEARCH_RESULT_PAGE_URL_PATTERN);
 	}
 

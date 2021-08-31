@@ -3,11 +3,11 @@ package com.bookdepository.pages.desktop.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 
+import com.bookdepository.driver.DriverManager;
 import com.bookdepository.pages.abstractclasses.fragment.AbstractFragment;
 
 
@@ -42,6 +42,10 @@ public class PaymentForm extends AbstractFragment {
 
 	@FindBy(css = "#visacardCvv")
 	WebElement cardCVVInput;
+
+	public PaymentForm(WebDriver driver) {
+		super(driver);
+	}
 
 	public List<String> getValidationErrorList() {
 		List<String> errorList = new ArrayList<>();
