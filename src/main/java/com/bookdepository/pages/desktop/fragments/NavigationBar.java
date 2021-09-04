@@ -25,7 +25,6 @@ public class NavigationBar extends AbstractFragment {
 	@FindBy(css = "a[href=\"/account\"]")
 	WebElement myAccountButton;
 
-
 	public NavigationBar(WebDriver driver) {
 		super(driver);
 		setRootElement(navigationBarCoreElement);
