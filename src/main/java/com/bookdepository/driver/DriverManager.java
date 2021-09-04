@@ -9,13 +9,11 @@ public class DriverManager {
 
 	public WebDriver createDriver() {
 		String browser = System.getProperty("browser");
-		switch (browser) {
-			case "Chrome":
-			case "chrome":
+		switch (browser.toUpperCase()) {
+			case "CHROME":
 				System.setProperty("webdriver.chrome.driver", "src/test/resources/drivers/chromedriver.exe");
 				return new ChromeDriver();
-			case "Firefox":
-			case "firefox":
+			case "FIREFOX":
 				System.setProperty("webdriver.gecko.driver", "src/test/resources/drivers/geckodriver.exe");
 				return new FirefoxDriver();
 			default:
