@@ -16,11 +16,12 @@ Feature: Desktop Checkout for Guest User
       | Core Java Professional |
     And I apply the following search filters
       | Price range  | 30 € +         |
-      | Availability | In Stock (7)   |
+      | Availability | In Stock (8)   |
       | Language     | English (40)   |
       | Format       | Paperback (45) |
     Then Search results contain only the following products
       | Think Java                                                            |
       | Thinking Recursively with Java                                        |
       | Java and Algorithmic Thinking for the Complete Beginner (2nd Edition) |
+      | Thinking in Java                                                      |
     When I click 'Add to basket' button for product with name Think Java
