@@ -45,5 +45,4 @@ public class NavigationBar extends AbstractFragment {
 		return true;
 	}
 
-
 }
