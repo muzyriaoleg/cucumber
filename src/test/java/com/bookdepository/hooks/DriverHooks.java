@@ -1,4 +1,4 @@
-package parallel.hooks;
+package com.bookdepository.hooks;
 
 import com.bookdepository.driver.DriverManager;
 
