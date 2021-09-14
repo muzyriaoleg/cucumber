@@ -8,24 +8,33 @@ import java.sql.SQLException;
 public class DBConnector {
 
     private static Connection connection;
+    public static final String JDBC_URL = "jdbc:mysql://localhost:3306/public";
+    public static final String DB_USER = "root";
+    public static final String DB_PASSWORD = "root";
 
-    private static void setUpDriver() {
+    private static void setUpDriver() throws SQLException {
         try {
             connection = DriverManager
-                .getConnection("jdbc:mysql://localhost:3306/public", "root", "root");
+                .getConnection(JDBC_URL, DB_USER, DB_PASSWORD);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public static Connection getConnection() {
-        setUpDriver();
+    public static Connection getConnection() throws SQLException {
+        if (connection == null) {
+            setUpDriver();
+        } else if (connection.isClosed()) {
+            setUpDriver();
+        }
         return connection;
     }
 
-    public static void closeConnection() throws SQLException {
-        connection.close();
+        public static void closeConnection () throws SQLException {
+            if (connection != null) {
+                connection.close();
+            }
+        }
+
+
     }
-
-
-}

@@ -5,12 +5,10 @@ Feature: Desktop Checkout for Guest User
   So I can manage it
 
   Scenario: Count users that has specific occupation and age
-    When Select users with occupation "Plumber" and age > 30 years
-    Then There are 2 users in result set
+    When Select users with occupation "Plumber" and age > 30 years, there are 2 users in result set
 
   Scenario: Select users and companies with specific filter
-    When Select users with occupation "Tester" and companies with employers number < 100 in same city
-    Then There is "Mercy" in "Company 5" in result
+    When Select users with occupation "Tester" and companies with employers number < 100 in same city - there is "Mercy" in "Company 5" in result
 
   Scenario: Delete row in DataBase
     Given There is a row in companies table with company name "Company 44"

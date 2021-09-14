@@ -1,4 +1,4 @@
-CREATE TABLE userz(user_name varchar(60), city varchar(60), age integer, address varchar(60), occupation varchar(60));
+CREATE TABLE userz (user_name varchar(60), city varchar(60), age integer, address varchar(60), occupation varchar(60));
 INSERT INTO userz (user_name, city, age, address, occupation)
 VALUES ('John', 'Melburn', 30, 'Street 1', 'Plumber'),
        ('Andry', 'Milan', 28, 'Street 2', 'Lamberjack'),
