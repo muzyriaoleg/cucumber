@@ -26,11 +26,11 @@ public class DriverManager {
 		String browser = System.getProperty("browser");
 		switch (browser.toUpperCase()) {
 			case "CHROME":
-				System.setProperty("webdriver.chrome.driver", "src/test/resources/drivers/chromedriver.exe");
+				System.setProperty("webdriver.chrome.driver", getChromeDriverPath());
 				driver.set(new ChromeDriver());
 				break;
 			case "FIREFOX":
-				System.setProperty("webdriver.gecko.driver", "src/test/resources/drivers/geckodriver.exe");
+				System.setProperty("webdriver.gecko.driver", getFirefoxDriverPath());
 				driver.set(new FirefoxDriver());
 				break;
 			default:
@@ -43,10 +43,35 @@ public class DriverManager {
 	}
 
 	public static void quitDriver() {
-		Optional.ofNullable(getDriverInstance()).ifPresent(driver -> DriverManager.driver.get().quit());
+		driver.get().quit();
 	}
 
 	public static void clearCookies() {
 		driver.get().manage().deleteAllCookies();
 	}
+
+	private static String getChromeDriverPath() {
+		String os = System.getProperty("os.name");
+		switch (os) {
+			case "Mac OS X":
+				return "src/test/resources/drivers/chromedriver";
+			case "Windows 10":
+				return "src/test/resources/drivers/chromedriver.exe";
+			default:
+				throw new IllegalStateException("This OS is not supported");
+		}
+	}
+
+	private static String getFirefoxDriverPath() {
+		String os = System.getProperty("os.name");
+		switch (os) {
+			case "Mac OS X":
+				return "src/test/resources/drivers/geckodriver";
+			case "Windows 10":
+				return "src/test/resources/drivers/geckodriver.exe";
+			default:
+				throw new IllegalStateException("This OS is not supported");
+		}
+	}
+
 }

@@ -16,4 +16,8 @@ public class WebDriverWaiter {
         }
         return driverWait;
     }
+
+    public static void clearWaiter() {
+        driverWait = null;
+    }
 }
