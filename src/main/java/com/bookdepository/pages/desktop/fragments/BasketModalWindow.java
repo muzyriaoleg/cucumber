@@ -1,20 +1,15 @@
 package com.bookdepository.pages.desktop.fragments;
 
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-
 import com.bookdepository.pages.abstractclasses.fragment.AbstractFragment;
+import com.codeborne.selenide.Selenide;
+import org.openqa.selenium.By;
 
 
 public class BasketModalWindow extends AbstractFragment {
 
-	@FindBy(css = ".continue-to-basket")
-	WebElement basketCheckoutButtonElement;
+    public Button basketCheckoutButton = new Button(By.cssSelector(".continue-to-basket"));
 
-	@FindBy(css = ".modal-dialog")
-	WebElement modalWindowRootElement;
-
-	public void pressButtonBasketCheckout() {
-		click(basketCheckoutButtonElement);
-	}
+    public BasketModalWindow() {
+		super(By.cssSelector(".modal-dialog"));
+    }
 }

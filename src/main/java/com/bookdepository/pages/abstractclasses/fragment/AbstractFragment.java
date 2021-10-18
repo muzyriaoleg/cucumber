@@ -1,72 +1,58 @@
 package com.bookdepository.pages.abstractclasses.fragment;
 
-import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import com.bookdepository.driver.DriverManager;
-import com.bookdepository.utils.WebDriverWaiter;
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideElement;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+
+import static com.codeborne.selenide.Condition.*;
 
 
-public abstract class AbstractFragment extends WebDriverWaiter {
+public abstract class AbstractFragment {
 
-	private WebElement rootElement;
-	protected WebDriver driver = DriverManager.getDriverInstance();
+    private SelenideElement rootElement;
 
-	public void setRootElement(WebElement element) {
-		this.rootElement = element;
-	}
+    protected AbstractFragment() {
+    }
 
-	public WebElement getRootElement() {
-		return rootElement;
-	}
+    public SelenideElement get() {
+        return Selenide.$(rootElement).shouldBe(enabled);
+    }
 
-	protected AbstractFragment() {
-		PageFactory.initElements(driver, this);
-	}
+    public AbstractFragment(By by) {
+        rootElement = Selenide.$(by);
+    }
 
-	protected AbstractFragment(WebElement element) {
-		this.rootElement = element;
-		PageFactory.initElements(driver, this);
-	}
+    public AbstractFragment jsClick() {
+        Selenide.executeJavaScript("arguments[0].click();", get());
+        return this;
+    }
 
-	public void jsClick(WebElement element) {
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("arguments[0].click();", element);
-	}
+    public AbstractFragment actionClick() {
+        Selenide.actions().moveToElement(get()).click().build().perform();
+        return this;
+    }
 
-	public void actionClick(WebElement element) {
-		Actions actions = new Actions(driver);
-		actions.moveToElement(element).click().build().perform();
-	}
+    public AbstractFragment actionSendKey(WebElement element, Keys key) {
+        Selenide.actions().moveToElement(element).sendKeys(key).build().perform();
+        return this;
+    }
 
-	public void actionSendKey(WebElement element, Keys key) {
-		Actions actions = new Actions(driver);
-		actions.moveToElement(element).sendKeys(key).build().perform();
-	}
+    public AbstractFragment jsScrollIntoView() {
+        Selenide.executeJavaScript("arguments[0].scrollIntoView();", get());
+        return this;
+    }
 
-	public void jsScrollIntoView(WebElement element) {
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("arguments[0].scrollIntoView();", element);
-	}
 
-	public WebElement find(WebElement element) {
-		driverWait().until(ExpectedConditions.visibilityOf(element));
-		return element;
-	}
+    public AbstractFragment click() {
+        get().click();
+        return this;
+    }
 
-	public WebElement click(WebElement element) {
-		find(element).click();
-		return element;
-	}
-
-	public WebElement typeText(WebElement element, String text) {
-		find(element);
-		element.sendKeys(text);
-		element.sendKeys(Keys.ENTER);
-		return element;
-	}
+    public String getText() {
+        return get().getText();
+    }
 
 }

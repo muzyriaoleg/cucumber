@@ -1,75 +1,73 @@
 package com.bookdepository.pages.abstractclasses.page;
 
+import com.bookdepository.constants.Constants;
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.impl.Waiter;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
-import com.bookdepository.constants.Constants;
-import com.bookdepository.driver.DriverManager;
-import com.bookdepository.utils.WebDriverWaiter;
 
+public abstract class AbstractPage {
 
-public abstract class AbstractPage extends WebDriverWaiter {
+    private String pageUrlPattern = Constants.EMPTY_STRING;
+    Waiter waiter = new Waiter();
 
-	protected WebDriver driver = DriverManager.getDriverInstance();
-	private String pageUrl;
-	private String pageUrlPattern = Constants.EMPTY_STRING;
+    protected AbstractPage() {
 
-	protected AbstractPage() {
-		setPageUrl(Constants.URL);
-		PageFactory.initElements(driver, this);
-	}
+    }
 
-	public void setPageUrl(String pageUrl) {
-		this.pageUrl = pageUrl;
-	}
+    public void setPageUrlPattern(String pageUrlPattern) {
+        this.pageUrlPattern = pageUrlPattern;
+    }
 
-	public String getPageUrl() {
-		return pageUrl;
-	}
+    public String getPageUrlPattern() {
+        return pageUrlPattern;
+    }
 
-	public void setPageUrlPattern(String pageUrlPattern) {
-		this.pageUrlPattern = pageUrlPattern;
-	}
+    public AbstractPage open() {
+        Selenide.open(pageUrlPattern);
+        isPageLoaded();
+        return this;
+    }
 
-	public String getPageUrlPattern() {
-		return pageUrlPattern;
-	}
+    public boolean isOpened() {
+        return isPageUrlMatchUrlPattern() && isPageLoaded();
+    }
 
-	public AbstractPage open() {
-		driver.get(getPageUrl() + getPageUrlPattern());
-		isPageLoaded();
-		return this;
-	}
+    public AbstractPage switchToIframe(By by) {
+        Selenide.switchTo().frame(Selenide.$(by));
+        return this;
+    }
 
-	public boolean isOpened() {
-		return isPageUrlMatchUrlPattern() && isPageLoaded();
-	}
+    public AbstractPage switchToIframe(int index) {
+        Selenide.switchTo().frame(index);
+        return this;
+    }
 
-	private ExpectedCondition<Boolean> jsIsLoaded() {
-		return webDriver -> ((JavascriptExecutor) webDriver)
-				.executeScript("return document.readyState")
-				.equals("complete");
-	}
+    private ExpectedCondition<Boolean> pageUrlIsUpdated() {
+        return webDriver -> webDriver.getCurrentUrl().contains(pageUrlPattern);
+    }
 
-	private ExpectedCondition<Boolean> jQueryIsLoaded() {
-		return webDriver -> ((JavascriptExecutor) webDriver)
-				.executeScript("return jQuery.active").toString()
-				.equals("0");
-	}
+    private ExpectedCondition<Boolean> jsIsLoaded() {
+        return webDriver -> ((JavascriptExecutor) webDriver)
+                .executeScript("return document.readyState")
+                .equals("complete");
+    }
 
-	private boolean isPageLoaded() {
-		driverWait().until(jsIsLoaded());
-		return true;
-	}
+    private ExpectedCondition<Boolean> jQueryIsLoaded() {
+        return webDriver -> ((JavascriptExecutor) webDriver)
+                .executeScript("return jQuery.active").toString()
+                .equals("0");
+    }
 
-	private boolean isPageUrlMatchUrlPattern() {
-		driverWait().until(pageUrlIsUpdated());
-		return true;
-	}
+    private boolean isPageLoaded() {
+        Selenide.Wait().until(jsIsLoaded());
+        return true;
+    }
 
-	private ExpectedCondition<Boolean> pageUrlIsUpdated() {
-		return webDriver -> webDriver.getCurrentUrl().contains(pageUrlPattern);
-	}
+    private boolean isPageUrlMatchUrlPattern() {
+        Selenide.Wait().until(pageUrlIsUpdated());
+        return true;
+    }
 }

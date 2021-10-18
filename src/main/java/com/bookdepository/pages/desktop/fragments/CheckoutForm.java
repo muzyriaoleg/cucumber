@@ -1,32 +1,12 @@
 package com.bookdepository.pages.desktop.fragments;
 
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-
 import com.bookdepository.pages.abstractclasses.fragment.AbstractFragment;
+import org.openqa.selenium.By;
 
 
 public class CheckoutForm extends AbstractFragment {
 
-	@FindBy(css = ".delivery-text dd")
-	WebElement deliveryCost;
-
-	@FindBy(css = ".basket-totals-wrap .total dd")
-	WebElement totalCost;
-
-	@FindBy(xpath = "//a[text()='Checkout']")
-	WebElement checkoutButtonElement;
-
-	public String getDeliveryCost() {
-		return deliveryCost.getText();
-	}
-
-	public String getTotalCost() {
-		return totalCost.getText();
-	}
-
-	public void pressCheckoutButton() {
-		jsClick(checkoutButtonElement);
-	}
-
+    public Field deliveryCost = new Field(By.cssSelector(".delivery-text dd"));
+    public Field totalCost = new Field(By.cssSelector(".basket-totals-wrap .total dd"));
+    public Button checkoutButton = new Button(By.xpath("//a[text()='Checkout']"));
 }

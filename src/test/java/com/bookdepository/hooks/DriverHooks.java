@@ -1,25 +1,35 @@
 package com.bookdepository.hooks;
 
-import com.bookdepository.driver.DriverManager;
-
-import com.bookdepository.utils.WebDriverWaiter;
+import com.bookdepository.constants.Constants;
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.WebDriverRunner;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 
 public class DriverHooks {
-	@Before
-	public void setupDriver() {
-		DriverManager.getDriverInstance();
-	}
+    @Before
+    public void setBaseUrl() {
+        Configuration.baseUrl = Constants.URL;
+    }
 
-	@After(order = 1)
-	public void quitDriver() {
-		DriverManager.quitDriver();
-	}
+    @Before
+    public void setBrowser() {
+        Configuration.browser = System.getProperty("browser");
+    }
 
-	@After(order = 2)
-	public void clearWater() {
-		WebDriverWaiter.clearWaiter();
-	}
+    @After()
+    public void takeScreenshot() {
+        Selenide.screenshot(generateScreenshotFileName());
+    }
+
+    private String generateScreenshotFileName() {
+        LocalDateTime time = LocalDateTime.now();
+        String formattedDateTime = time.format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss"));
+        return "screenshot_" + formattedDateTime;
+    }
 }

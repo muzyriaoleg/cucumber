@@ -1,86 +1,39 @@
 package com.bookdepository.pages.desktop.fragments;
 
+import com.bookdepository.pages.abstractclasses.fragment.AbstractFragment;
+import org.openqa.selenium.By;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.Select;
-
-import com.bookdepository.pages.abstractclasses.fragment.AbstractFragment;
 
 
 public class PaymentForm extends AbstractFragment {
 
-	@FindBy(xpath = "//label[@for='visacardNumber']/../..//span[@class='grid_12 notification custom_notification hide']")
-	WebElement creditCardNumberValidationError;
+    public Field creditCardNumberValidationError = new Field(By.xpath("//label[@for='visacardNumber']/../..//span[@class='grid_12 notification custom_notification hide']"));
 
-	@FindBy(xpath = "//label[@for='visacardName']/../..//span[@class='grid_12 notification custom_notification hide']")
-	WebElement creditCardNameValidationError;
+    public Field creditCardNameValidationError = new Field(By.xpath("//label[@for='visacardName']/../..//span[@class='grid_12 notification custom_notification hide']"));
 
-	@FindBy(xpath = "//label[@for='visacardCvv']/../..//span[@class='grid_12 notification custom_notification hide']")
-	WebElement creditCardCVVValidationError;
+    public Field creditCardCVVValidationError = new Field(By.xpath("//label[@for='visacardCvv']/../..//span[@class='grid_12 notification custom_notification hide']"));
 
-	@FindBy(css = "#submitButton")
-	WebElement buyNowButton;
+    public Button buyNowButton = new Button(By.id("#submitButton"));
 
-	@FindBy(css = "#brandSelected")
-	WebElement cardTypeSelectElement;
+    public Select cardTypeSelect = new Select(By.id("#brandSelected"));
 
-	@FindBy(css = "#visacardNumber")
-	WebElement cardNumberInput;
+    public Input cardNumberInput = new Input(By.id("#visacardNumber"));
 
-	@FindBy(css = "#visacardValidToMonth")
-	WebElement validToMonthSelectElement;
+    public Select validToMonthSelect = new Select(By.id("#visacardValidToMonth"));
 
-	@FindBy(css = "#visacardValidToYear")
-	WebElement validToYearSelectElement;
+    public Select validToYearSelect = new Select(By.id("#visacardValidToYear"));
 
-	@FindBy(css = "#visacardName")
-	WebElement cardNameInput;
+    public Input cardNameInput = new Input(By.id("#visacardName"));
 
-	@FindBy(css = "#visacardCvv")
-	WebElement cardCVVInput;
+    public Input cardCVVInput = new Input(By.id("#visacardCvv"));
 
-	public List<String> getValidationErrorList() {
-		List<String> errorList = new ArrayList<>();
-		errorList.add(creditCardNumberValidationError.getText());
-		errorList.add(creditCardNameValidationError.getText());
-		errorList.add(creditCardCVVValidationError.getText());
-		return errorList;
-	}
-
-	public void pressBuyNowButton() {
-		driver.switchTo().frame(driver.findElement(By.xpath("//iframe[@id='chase']")));
-		jsClick(buyNowButton);
-	}
-
-	public void chooseCardType(String cardType) {
-		Select cardTypeSelect = new Select(cardTypeSelectElement);
-		cardTypeSelect.selectByVisibleText(cardType);
-	}
-
-	public void typeCardNumber(String cardNumber) {
-		cardNumberInput.sendKeys(cardNumber);
-	}
-
-	public void selectValidToMonth(String month) {
-		Select validToMonthSelect = new Select(validToMonthSelectElement);
-		validToMonthSelect.selectByVisibleText(month);
-	}
-
-	public void selectValidToYear(String year) {
-		Select validToYearSelect = new Select(validToYearSelectElement);
-		validToYearSelect.selectByVisibleText(year);
-	}
-
-	public void typeCardName(String cardName) {
-		cardNameInput.sendKeys(cardName);
-	}
-
-	public void typeCardCVV(String cvv) {
-		cardCVVInput.sendKeys(cvv);
-	}
-
+    public List<String> getValidationErrorList() {
+        List<String> errorList = new ArrayList<>();
+        errorList.add(creditCardNumberValidationError.getText());
+        errorList.add(creditCardNameValidationError.getText());
+        errorList.add(creditCardCVVValidationError.getText());
+        return errorList;
+    }
 }

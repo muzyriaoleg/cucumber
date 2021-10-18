@@ -2,10 +2,10 @@ package com.bookdepository.steps;
 
 import java.util.*;
 
+import com.codeborne.selenide.WebDriverRunner;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 
-import com.bookdepository.driver.DriverManager;
 import com.bookdepository.dto.Card;
 import com.bookdepository.dto.User;
 import com.bookdepository.pages.desktop.PageFactory;
@@ -21,7 +21,7 @@ public class CheckoutSteps extends PageFactory {
 
 	@Given("^(?:I|[Uu]ser|[Cc]ustomer) (?:am|is|are|) an anonymous customer with clear cookies")
 	public void clearCookies() {
-		DriverManager.clearCookies();
+		WebDriverRunner.driver().clearCookies();
 	}
 
 	@And("^(?:I|[Uu]ser|[Cc]ustomer) (?:open|go)(?:s|) (?:the|to) \"(.+)\"$")
@@ -37,7 +37,7 @@ public class CheckoutSteps extends PageFactory {
 
 	@And("^(?:I|[Uu]ser|[Cc]ustomer) search for (.+)$")
 	public void userSearchForProduct(String bookTitle) {
-		getHomePage().search(bookTitle);
+		getHomePage().searchBar.searchInput.typeText(bookTitle).submitWithEnter();
 	}
 
 	@And("^Search results contain(?:s|) (?:the|) (?:following|next) (?:product|book|)(?:s|es|)$")
@@ -48,11 +48,11 @@ public class CheckoutSteps extends PageFactory {
 
 	@And("^(?:I|[Uu]ser|[Cc]ustomer) apply (?:the|) (?:following|next) search filters$")
 	public void userApplySearchFilters(Map<String, String> filters) {
-		getSearchResultPage().choosePriceRange(filters.get("Price range"));
-		getSearchResultPage().chooseAvailability(filters.get("Availability"));
-		getSearchResultPage().chooseLanguage(filters.get("Language"));
-		getSearchResultPage().chooseFormat(filters.get("Format"));
-		getSearchResultPage().submitFilter();
+		getSearchResultPage().searchWidget.priceRangeSelect.selectByText(filters.get("Price range"));
+		getSearchResultPage().searchWidget.availabilitySelect.selectByText(filters.get("Availability"));
+		getSearchResultPage().searchWidget.languageSelect.selectByText(filters.get("Language"));
+		getSearchResultPage().searchWidget.formatSelect.selectByText(filters.get("Format"));
+		getSearchResultPage().searchWidget.submitFiltersButton.press();
 	}
 
 	@Then("^Search results (?:contain|has) only the (?:following|next) (?:product|book|)(?:s|es|)$")
@@ -68,62 +68,59 @@ public class CheckoutSteps extends PageFactory {
 
 	@And("^(?:I|[Uu]ser|[Cc]ustomer) (?:select|choose) 'Basket/Checkout' in basket pop-up$")
 	public void userSelectCheckoutInPopUp() {
-		getSearchResultPage().confirmCheckoutOnModalWindow();
+		getSearchResultPage().basketModalWindow.basketCheckoutButton.press();
 	}
 
 	@And("^Basket order summary is as following:$")
 	public void checkBasketOrderSummary(@Transpose Map<String, String> orderSummary) {
-		SoftAssertions softAssert = new SoftAssertions();
-		softAssert.assertThat(getBasketPage().getDeliveryCost()).as("Delivery cost doesn't match expected").isEqualTo(
-				orderSummary.get("Delivery cost"));
-		softAssert.assertThat(getBasketPage().getTotalCost()).as("Total cost doesn't match expected").isEqualTo(
-				orderSummary.get("Total"));
-		softAssert.assertAll();
+		Map<String, String> actualOrderSummary = new HashMap<>();
+		actualOrderSummary.put("Delivery cost", getBasketPage().checkoutForm.deliveryCost.get().getText());
+		actualOrderSummary.put("Total", getBasketPage().checkoutForm.totalCost.get().getText());
+		Assertions.assertThat(actualOrderSummary).as("Order summary doesnt match expected")
+				.isEqualTo(orderSummary);
 	}
 
 	@When("^(?:I|[Uu]ser|[Cc]ustomer) (?:click|press) 'Checkout' button on 'Basket' page$")
 	public void userClickCheckoutButton() {
-		getBasketPage().checkout();
+		getBasketPage().checkoutForm.checkoutButton.press();
 	}
 
 	@When("^(?:I|[Uu]ser|[Cc]ustomer) click(?:s|) 'Buy now' button$")
 	public void userClickBuyNowButton() {
-		getCheckoutPage().pressBuyNowButtonForDeliveryForm();
+		getCheckoutPage().deliveryForm.buyNowButton.jsScrollIntoView();
+		getCheckoutPage().deliveryForm.buyNowButton.press();
 	}
 
 	@Then("^(?:the|) (?:following|next) validation error messages are (?:displayed|present) on 'Delivery Address' form:$")
 	public void checkDeliveryAddressValidationErrors(Map<String, String> errorMessages) {
-		List<String> errorList = new ArrayList<>();
-		errorMessages.forEach((k, v) -> errorList.add(v));
-		errorList.remove(0);
-		Assertions.assertThat(getCheckoutPage().getErrorMessagesFromDeliveryAddressForm()).isEqualTo(errorList);
+		Assertions.assertThat(getCheckoutPage().getErrorMessagesFromDeliveryAddressForm()).isEqualTo(errorMessages);
 	}
 
 	@And("^Checkout order summary is as following:$")
 	public void checkCheckoutOrderSummary(@Transpose Map<String, String> orderSummary) {
 		SoftAssertions softAssert = new SoftAssertions();
-		softAssert.assertThat(getCheckoutPage().getOrderSubTotal()).isEqualTo(orderSummary.get("Sub-total"));
-		softAssert.assertThat(getCheckoutPage().getDeliveryCost()).isEqualTo(orderSummary.get("Delivery"));
-		softAssert.assertThat(getCheckoutPage().getVATCost()).isEqualTo(orderSummary.get("VAT"));
-		softAssert.assertThat(getCheckoutPage().getTotalCost()).isEqualTo(orderSummary.get("Total"));
+		softAssert.assertThat(getCheckoutPage().orderSummaryWidget.subTotal.get().getText()).isEqualTo(orderSummary.get("Sub-total"));
+		softAssert.assertThat(getCheckoutPage().orderSummaryWidget.deliveryCost.get().getText()).isEqualTo(orderSummary.get("Delivery"));
+		softAssert.assertThat(getCheckoutPage().orderSummaryWidget.vatCost.get().getText()).isEqualTo(orderSummary.get("VAT"));
+		softAssert.assertThat(getCheckoutPage().orderSummaryWidget.totalCost.get().getText()).isEqualTo(orderSummary.get("Total"));
 		softAssert.assertAll();
 	}
 
 	@And("^(?:I|[Uu]ser|[Cc]ustomer) checkout as a new customer with email (.+)$")
 	public void userCheckoutAsNewUser(String email) {
-		getCheckoutPage().setEmailAddress(email);
+		getCheckoutPage().deliveryForm.emailInput.typeText(email);
 	}
 
 	@When("^(?:I|[Uu]ser|[Cc]ustomer) (?:fill|provide) delivery address information (?:manually|):$")
 	public void userFillDeliveryAddress(@Transpose Map<String, String> map) {
 		User user = new ObjectMapper().convertValue(map, User.class);
-		getCheckoutPage().setFullName(user.getFullName());
-		getCheckoutPage().setDeliveryCountry(user.getDeliveryCounty());
-		getCheckoutPage().setAddressLine1(user.getAddressLine1());
-		getCheckoutPage().setAddressLine2(user.getAddressLine2());
-		getCheckoutPage().setCityOrTown(user.getTownCity());
-		getCheckoutPage().setCountyOrState(user.getCountyState());
-		getCheckoutPage().setPostcode(user.getPostCode());
+		getCheckoutPage().deliveryForm.fullNameInput.typeText(user.getFullName());
+		getCheckoutPage().deliveryForm.deliveryCountrySelect.selectByText(user.getDeliveryCounty());
+		getCheckoutPage().deliveryForm.addressLine1Input.typeText(user.getAddressLine1());
+		getCheckoutPage().deliveryForm.addressLine2Input.typeText(user.getAddressLine2());
+		getCheckoutPage().deliveryForm.townCityInput.typeText(user.getTownCity());
+		getCheckoutPage().deliveryForm.countyStateInput.typeText(user.getCountyState());
+		getCheckoutPage().deliveryForm.postCodeInput.typeText(user.getPostCode());
 	}
 
 	@Then("^there is no validation error messages (?:displayed|present) on 'Delivery Address' form$")
@@ -147,11 +144,11 @@ public class CheckoutSteps extends PageFactory {
 	@When("^(?:I|[Uu]ser|[Cc]ustomer) (?:enter|provide) (?:my|his|) card details$")
 	public void userEnterCardDetails(Map<String, String> map) {
 		Card card = new ObjectMapper().convertValue(map, Card.class);
-		getCheckoutPage().setCardType(card.getCardType());
-		getCheckoutPage().setCardName(card.getNameOnCard());
-		getCheckoutPage().setCardNumber(card.getCardNumber());
-		getCheckoutPage().setExpirationYear(card.getExpiryYear());
-		getCheckoutPage().setExpirationMonth(card.getExpiryMonth());
-		getCheckoutPage().setCVV(card.getCvv());
+		getCheckoutPage().paymentForm.cardTypeSelect.selectByText(card.getCardType());
+		getCheckoutPage().paymentForm.cardNameInput.typeText(card.getNameOnCard());
+		getCheckoutPage().paymentForm.cardNumberInput.typeText(card.getCardNumber());
+		getCheckoutPage().paymentForm.validToYearSelect.selectByText(card.getExpiryYear());
+		getCheckoutPage().paymentForm.validToMonthSelect.selectByText(card.getExpiryMonth());
+		getCheckoutPage().paymentForm.cardCVVInput.typeText(card.getCvv());
 	}
 }

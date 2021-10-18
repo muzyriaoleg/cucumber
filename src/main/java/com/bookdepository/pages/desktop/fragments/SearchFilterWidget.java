@@ -1,50 +1,18 @@
 package com.bookdepository.pages.desktop.fragments;
 
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.Select;
-
 import com.bookdepository.pages.abstractclasses.fragment.AbstractFragment;
+import org.openqa.selenium.By;
 
 
 public class SearchFilterWidget extends AbstractFragment {
 
-	@FindBy(css = "#filterPrice")
-	WebElement priceRangeSelectElem;
+    public Select priceRangeSelect = new Select(By.cssSelector("#filterPrice"));
 
-	@FindBy(css = "#filterAvailability")
-	WebElement availabilitySelectElem;
+    public Select availabilitySelect = new Select(By.cssSelector("#filterAvailability"));
 
-	@FindBy(css = "#filterLang")
-	WebElement languageSelectElem;
+    public Select languageSelect = new Select(By.cssSelector("#filterLang"));
 
-	@FindBy(css = "#filterFormat")
-	WebElement formatSelectElem;
+    public Select formatSelect = new Select(By.cssSelector("#filterFormat"));
 
-	@FindBy(css = ".padded-btn-wrap button[type='submit']")
-	WebElement submitFiltersButtonElem;
-
-	public void choosePriceRange(String priceValue) {
-		Select priceRangeSelect = new Select(priceRangeSelectElem);
-		priceRangeSelect.selectByVisibleText(priceValue);
-	}
-
-	public void chooseAvailability(String availabilityValue) {
-		Select availabilitySelect = new Select(availabilitySelectElem);
-		availabilitySelect.selectByVisibleText(availabilityValue);
-	}
-
-	public void chooseLanguage(String languageValue) {
-		Select languageSelect = new Select(languageSelectElem);
-		languageSelect.selectByVisibleText(languageValue);
-	}
-
-	public void chooseFormat(String formatValue) {
-		Select formatSelect = new Select(formatSelectElem);
-		formatSelect.selectByVisibleText(formatValue);
-	}
-
-	public void pressButtonSubmit() {
-		submitFiltersButtonElem.click();
-	}
+    public Button submitFiltersButton = new Button(By.cssSelector(".padded-btn-wrap button[type='submit']"));
 }

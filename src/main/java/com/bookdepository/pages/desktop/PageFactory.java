@@ -45,7 +45,7 @@ public class PageFactory {
 			return accountPage;
 		}
 		else {
-			throw new IllegalStateException("Cannot create specified page");
+			throw new IllegalStateException("Cannot create specified page " + pageName);
 		}
 	}
 
