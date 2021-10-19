@@ -2,7 +2,6 @@ package com.bookdepository.pages.abstractclasses.page;
 
 import com.bookdepository.constants.Constants;
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.impl.Waiter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -11,7 +10,6 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 public abstract class AbstractPage {
 
     private String pageUrlPattern = Constants.EMPTY_STRING;
-    Waiter waiter = new Waiter();
 
     protected AbstractPage() {
 

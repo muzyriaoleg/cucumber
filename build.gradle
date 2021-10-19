@@ -1,0 +1,75 @@
+plugins {
+    id 'java'
+}
+
+import static java.lang.System.getProperties
+
+ext {
+    junit5_version = "5.7.0"
+    selenide_version = "5.17.2"
+    cucumber_version = '7.0.0'
+    jackson_version = "2.12.0"
+}
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    cucumberRuntime {
+        extendsFrom testImplementation
+    }
+}
+
+
+dependencies {
+
+    // JUnit
+    implementation "org.junit.jupiter:junit-jupiter-api:$junit5_version"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit5_version"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-params:$junit5_version"
+    testRuntimeOnly "junit:junit:4.13.1"
+
+    // Cucumber
+    testImplementation "io.cucumber:cucumber-java:$cucumber_version"
+    testImplementation "io.cucumber:cucumber-junit:$cucumber_version"
+
+    //Selenide
+    implementation "com.codeborne:selenide:$selenide_version"
+
+    // java
+    implementation "javax.annotation:javax.annotation-api:1.3.2"
+
+    // assertions
+    implementation "org.assertj:assertj-core:3.18.1"
+
+    // commons & utils
+    implementation "org.apache.commons:commons-lang3:3.11"
+    implementation "org.apache.commons:commons-math3:3.6.1"
+    implementation "org.apache.commons:commons-text:1.9"
+    implementation "commons-beanutils:commons-beanutils:1.9.4"
+
+    // JSON, CSV, jackson
+    implementation "com.fasterxml.jackson.core:jackson-databind:$jackson_version"
+}
+
+def availableThreads = Runtime.runtime.availableProcessors() ?: 1
+def tags = System.getProperty("tags")
+
+task cucumber {
+    dependsOn assemble, testClasses
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty',
+                    '--glue', 'com.bookdepository', 'src/test/resources/features',
+                    '--tags', tags,
+                    '--threads', availableThreads
+            ]
+        }
+    }
+}
+
+
+

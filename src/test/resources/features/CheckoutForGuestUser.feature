@@ -28,13 +28,13 @@ Feature: Desktop Checkout for Guest User
     Then I am redirected to the "Basket page"
     And Basket order summary is as following:
       | Delivery cost | Total   |
-      | FREE          | 31,74 € |
+      | FREE          | 31,93 € |
     When I click 'Checkout' button on 'Basket' page
     Then I am redirected to the "Checkout page"
     When I click 'Buy now' button
     Then the following validation error messages are displayed on 'Delivery Address' form:
-      | Form field name | validation error message                               |
-      | Email address    | Please enter your email address                       |
+      | Form field name | validation error message                              |
+      | Email address   | Please enter your email address                       |
       | Full name       | Please enter a first and last name                    |
       | Address line 1  | Please enter your address line 1                      |
       | Town/City       | Please enter your town/city                           |
