@@ -9,7 +9,7 @@ public class Select extends AbstractFragment {
     }
 
     public Select selectByText(String value) {
-        get().selectOption(value);
+        get().selectOptionContainingText(value);
         return this;
     }
 

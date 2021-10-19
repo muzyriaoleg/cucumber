@@ -15,9 +15,9 @@ public class DeliveryForm extends AbstractFragment {
     public Field addressLine1ValidationError = new Field(By.xpath("//input[@name='delivery-addressLine1']/../div[@class='error-block']"));
     public Field deliveryCityValidationError = new Field(By.xpath("//input[@name='delivery-city']/../div[@class='error-block']"));
     public Field deliveryPostCodeValidationError = new Field(By.xpath("//input[@name='delivery-postCode']/../div[@class='error-block']"));
-    public Input emailInput = new Input(By.cssSelector("input[name='delivery-fullName']"));
+    public Input emailInput = new Input(By.cssSelector("input[name='emailAddress']"));
     public Input fullNameInput = new Input(By.cssSelector("input[name='delivery-fullName']"));
-    public Select deliveryCountrySelect = new Select(By.cssSelector("#deliveryCountryDropdown"));
+    public Select deliveryCountrySelect = new Select(By.cssSelector("#delivery-CountryDropdown"));
     public Input addressLine1Input = new Input(By.cssSelector("input[name='delivery-addressLine1']"));
     public Input addressLine2Input = new Input(By.cssSelector("input[name='delivery-addressLine2']"));
     public Input townCityInput = new Input(By.cssSelector("input[name='delivery-city']"));
@@ -30,7 +30,7 @@ public class DeliveryForm extends AbstractFragment {
         errors.put("Full name", deliveryFullNameValidationError.get().getText());
         errors.put("Address line 1", addressLine1ValidationError.get().getText());
         errors.put("Town/City", deliveryCityValidationError.get().getText());
-        errors.put(" Postcode/ZIP", deliveryPostCodeValidationError.get().getText());
+        errors.put("Postcode/ZIP", deliveryPostCodeValidationError.get().getText());
         return errors;
     }
 
