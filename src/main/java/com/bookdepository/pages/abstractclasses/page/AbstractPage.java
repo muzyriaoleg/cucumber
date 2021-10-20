@@ -39,6 +39,7 @@ public abstract class AbstractPage {
     }
 
     public AbstractPage switchToIframe(int index) {
+
         Selenide.switchTo().frame(index);
         return this;
     }
